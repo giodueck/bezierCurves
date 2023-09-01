@@ -68,6 +68,21 @@ public:
             lastMousePos = GetMousePos();
         }
 
+        // Add points
+        if (selPoint == -1 && GetKey(olc::SPACE).bPressed)
+        {
+            bezier.degree++;
+            bezier.controlPoints = (vf2d *) realloc(bezier.controlPoints, sizeof(vf2d) * (bezier.degree + 1));
+            bezier.controlPoints[bezier.degree] = GetMousePos();
+        }
+        // Delete points
+        if (selPoint == -1 && GetKey(olc::BACK).bPressed)
+        {
+            bezier.degree--;
+            if (bezier.degree < 0)
+                bezier.degree = 0;
+        }
+
         /* Drawing */
         Clear(olc::BLACK);
 
@@ -82,6 +97,7 @@ public:
 
         // control points
             // Last point
+        if (bezier.degree > 0)
         FillCircle(bezier.controlPoints[bezier.degree], controlPointRadius, olc::WHITE);
 
         for (int i = 1; i < bezier.degree; i++)
