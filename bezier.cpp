@@ -59,18 +59,31 @@ Bezier::Bezier()
 Bezier::Bezier(int degree, vf2d *p)
 {
     this->degree = degree;
-    controlPoints = new vf2d[degree + 1];
+    // controlPoints = new vf2d[degree + 1];
+    // controlPoints = (vf2d *) malloc(sizeof(vf2d) * (degree + 1));
     
-    for (int i = 0; i < degree + 1; i++)
-    {
-        controlPoints[i] = p[i];
-    }
+    // for (int i = 0; i < degree + 1; i++)
+    // {
+    //     controlPoints[i] = p[i];
+    // }
+    this->controlPoints = p;
+}
+
+Bezier::Bezier(int degree)
+{
+    this->degree = degree;
+    // controlPoints = (vf2d *) malloc(sizeof(vf2d) * (degree + 1));
+
+    // for (int i = 0; i < degree + 1; i++)
+    // {
+    //     controlPoints[i] = {0, 0};
+    // }
 }
 
 Bezier::~Bezier()
 {
-    if (controlPoints != nullptr)
-        delete controlPoints;
+    // if (controlPoints != nullptr)
+    //     delete controlPoints;
 }
 
 // Helper for getting binomial coefficients from Wikipedia (https://en.wikipedia.org/wiki/Binomial_coefficient#In_programming_languages)

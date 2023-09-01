@@ -25,6 +25,7 @@ public:
 
 public:
     Bezier();
+    Bezier(int degree);
     Bezier(int degree, vf2d *p);
 
     ~Bezier();

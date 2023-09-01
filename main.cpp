@@ -2,14 +2,18 @@
 
 #include "bezier.h"
 
-using olc::vi2d, olc::vf2d;
+using olc::vi2d;
+using olc::vf2d;
 
 class BezierCurves : public olc::PixelGameEngine
 {
 private:
     // QuadraticBezier bezier;
     Bezier bezier;
+    
+    int degree = 2;
     int controlPointRadius = 8;
+    vf2d *p;
 
 public:
     BezierCurves()
@@ -21,17 +25,14 @@ public:
     bool OnUserCreate() override
     {
         // Called once at the start, so create things here
-        // bezier.controlPoints[0] = {(float) ScreenWidth() / 3, (float) ScreenHeight() / 3 * 2};
-        // bezier.controlPoints[1] = {(float) ScreenWidth() / 2, (float) ScreenHeight() / 3};
-        // bezier.controlPoints[2] = {(float) ScreenWidth() / 3 * 2, (float) ScreenHeight() / 3 * 2};
-
-        vf2d p[] = {{(float) ScreenWidth() / 4, (float) ScreenHeight() / 3 * 2},
-                    {(float) ScreenWidth() / 3, (float) ScreenHeight() / 3},
-                    {(float) ScreenWidth() / 3 * 2, (float) ScreenHeight() / 3 * 2},
-                    {(float) ScreenWidth() / 4 * 3, (float) ScreenHeight() / 3},
-                    {0, 0}};
         
-        bezier = Bezier(2, p);
+        p = (vf2d *) malloc(sizeof(vf2d) * (degree + 1));
+        
+        for (int i = 0; i <= degree; i++)
+        {
+            p[i] = {(float) ScreenWidth() / (i + 2), (float) ScreenHeight() / (i + 2)};
+        }
+        bezier = Bezier(degree, p);
 
         return true;
     }
@@ -66,8 +67,6 @@ public:
             bezier.controlPoints[selPoint] += dPos;
             lastMousePos = GetMousePos();
         }
-
-        /* Logic */
 
         /* Drawing */
         Clear(olc::BLACK);
