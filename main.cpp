@@ -44,6 +44,7 @@ public:
         /* Controls */
         static int selPoint = -1;
         static vi2d lastMousePos = {0, 0};
+        static int drawControlPoints = 1;
 
         if (selPoint == -1 && GetMouse(olc::Mouse::LEFT).bPressed)
         {
@@ -83,29 +84,20 @@ public:
                 bezier.degree = 0;
         }
 
+        // Toggle draw control points
+        if (GetKey(olc::C).bPressed)
+        {
+            drawControlPoints = 1 - drawControlPoints;
+        }
+
         /* Drawing */
         Clear(olc::BLACK);
 
-        // dotted lines
-        for (int i = 1; i <= bezier.degree; i++)
-        {
-            DrawLine(bezier.controlPoints[i - 1], bezier.controlPoints[i], olc::DARK_GREY, 0xFF00FF00);
-        }
-
         // Bezier curve
-        bezier.Draw(this);
-
-        // control points
-            // Last point
-        if (bezier.degree > 0)
-        FillCircle(bezier.controlPoints[bezier.degree], controlPointRadius, olc::WHITE);
-
-        for (int i = 1; i < bezier.degree; i++)
-        {
-            FillCircle(bezier.controlPoints[i], controlPointRadius, olc::YELLOW);
-        }
-            // First point
-        FillCircle(bezier.controlPoints[0], controlPointRadius, olc::WHITE);
+        if (drawControlPoints)
+            bezier.Draw(this, olc::RED, controlPointRadius);
+        else
+            bezier.DrawBare(this, olc::RED);
 
         return true;
     }

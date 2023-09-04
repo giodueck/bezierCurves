@@ -30,5 +30,7 @@ public:
 
     ~Bezier();
 
-    void Draw(olc::PixelGameEngine *pge, olc::Pixel color = olc::RED);
+    void Draw(olc::PixelGameEngine *pge, olc::Pixel color = olc::RED, int controlPointRadius = 8);
+
+    void DrawBare(olc::PixelGameEngine *pge, olc::Pixel color = olc::RED);
 };

@@ -104,7 +104,31 @@ unsigned long binomial(unsigned long n, unsigned long k)
     return c;
 }
 
-void Bezier::Draw(olc::PixelGameEngine *pge, olc::Pixel color)
+void Bezier::Draw(olc::PixelGameEngine *pge, olc::Pixel color, int controlPointRadius)
+{
+    // dotted lines
+    for (int i = 1; i <= degree; i++)
+    {
+        pge->DrawLine(controlPoints[i - 1], controlPoints[i], olc::DARK_GREY, 0xFF00FF00);
+    }
+
+    // Curve itself
+    DrawBare(pge, color);
+
+    // control points
+        // Last point
+    if (degree > 0)
+    pge->FillCircle(controlPoints[degree], controlPointRadius, olc::WHITE);
+
+    for (int i = 1; i < degree; i++)
+    {
+        pge->FillCircle(controlPoints[i], controlPointRadius, olc::YELLOW);
+    }
+        // First point
+    pge->FillCircle(controlPoints[0], controlPointRadius, olc::WHITE);
+}
+
+void Bezier::DrawBare(olc::PixelGameEngine *pge, olc::Pixel color)
 {
     float interval = 0;
     for (int i = 1; i <= degree; i++)
