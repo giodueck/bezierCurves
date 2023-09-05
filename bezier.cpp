@@ -138,17 +138,17 @@ void Bezier::DrawBare(olc::PixelGameEngine *pge, olc::Pixel color)
     interval = 1 / (interval);
 
     vf2d p;
-    float i_;
-    for (float i = 0; i <= 1; i += interval)
+    float t_;
+    for (float t = 0; t <= 1; t += interval)
     {
-        // p = (1-i) * (1-i) * controlPoints[0] + 2 * i * (1-i) * controlPoints[1] + i * i * controlPoints[2];
+        // p = (1-t) * (1-t) * controlPoints[0] + 2 * t * (1-t) * controlPoints[1] + t * t * controlPoints[2];
 
         p = {0, 0};
-        i_ = 1 - i;
+        t_ = 1 - t;
 
         for (int j = 0; j <= degree; j++)
         {
-            p += binomial(degree, j) * powf(i_, degree - j) * powf(i, j) * controlPoints[j];
+            p += binomial(degree, j) * powf(t_, degree - j) * powf(t, j) * controlPoints[j];
         }
 
         pge->FillCircle(p, 2, color);
